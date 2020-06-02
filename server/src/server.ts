@@ -1,16 +1,12 @@
 import express from 'express'
+import path from 'path'
+import routes from './routes'
 
 const app = express()
 
-app.get('/users', (req, res) => {
-    res.json([
-        'usuário 01',
-        'usuário 02',
-        'usuário 03',
-        'usuário 04',
-        'usuário 05',
-        'usuário 06'
-    ])
-})
+app.use(express.json())
+app.use(routes)
+
+app.use('/uploads', express.static(path.resolve(__dirname, '..', 'uploads')))
 
 app.listen(3333)
