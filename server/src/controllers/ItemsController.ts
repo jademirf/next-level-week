@@ -15,7 +15,7 @@ class ItemsController {
 
     return res.status(200).json({
         message: "Listado com sucesso",
-        data: serializedItems
+        items: serializedItems
     })
   }
 }
