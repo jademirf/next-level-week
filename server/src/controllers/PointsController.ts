@@ -62,8 +62,15 @@ class PointsController {
       .where('uf', String(uf))
       .distinct()
       .select('points.*')
+    
+    const serializedPoints = points.map(point => {
+      return {
+        ...point,
+        image_url: `http://192.168.1.20:3333/uploads/${point.image}`
+      }
+    })
 
-    return res.json({ message: 'success', data: points })
+    return res.json({ message: 'success', data: serializedPoints })
   }
   async show(req: Request, res: Response) {
     const { id } = req.params
@@ -78,7 +85,12 @@ class PointsController {
       .where('point_items.point_id', id)
       .select('items.title')
 
-    return res.status(200).json({message: 'success', data: { point, items } })
+      const serializedPoint = {
+        ...point,
+        image_url: `http://192.168.1.20:3333/uploads/${point.image}`
+      }
+
+    return res.status(200).json({message: 'success', data: { serializedPoint, items } })
   }
 }
 
